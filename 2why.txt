@@ -1,0 +1,13 @@
+⚙️ 2. Why GitHub Exists (Real Problem It Solves)
+
+Before Git/GitHub:
+
+Developers manually shared zip files
+Code conflicts were common
+No version tracking
+No backup system
+No collaboration system
+
+👉 Problem: “How do multiple developers work on the same code without breaking it?”
+
+GitHub solves this.
