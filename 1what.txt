@@ -1,0 +1,10 @@
+🧠 1. What is GitHub?
+
+GitHub is a cloud-based platform for storing, managing, and collaborating on code using Git (version control system).
+
+It is built on top of Git.
+
+So:
+
+Git = tool (runs locally on your machine)
+GitHub = platform (hosts Git repositories online
