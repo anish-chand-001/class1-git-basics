@@ -1,0 +1,928 @@
+================================================================================
+GIT & GITHUB NOTES
+SECTION 10: MERGING & COLLABORATION
+(141-160)
+=========
+
+# GOAL
+
+Learn how multiple developers combine work safely into a single codebase.
+
+Merging is the foundation of team collaboration in Git.
+
+================================================================================
+WHY MERGING EXISTS
+==================
+
+Imagine a company with three developers.
+
+Developer A:
+feature/jwt-authentication
+
+Developer B:
+feature/payment-gateway
+
+Developer C:
+feature/email-service
+
+All branches started from the same codebase.
+
+Eventually the company wants:
+
+```
+JWT Authentication
++
+Payment Gateway
++
+Email Service
+```
+
+inside one application.
+
+The process of combining branch histories is called:
+
+```
+MERGING
+```
+
+================================================================================
+141. UNDERSTANDING MERGE
+========================
+
+## DEFINITION
+
+A merge combines changes from one branch into another.
+
+Example:
+
+main
+│
+├── feature-auth
+│
+└── feature-payment
+
+After development:
+
+main
+│
+├── feature-auth (completed)
+│
+└── feature-payment (completed)
+
+Now combine them into main.
+
+---
+
+## COMMAND
+
+Switch to target branch:
+
+git switch main
+
+Merge feature branch:
+
+git merge feature-auth
+
+---
+
+## MENTAL MODEL
+
+Road A
++
+Road B
+=
+One Highway
+
+================================================================================
+142. FAST-FORWARD MERGE
+=======================
+
+This is the simplest merge type.
+
+---
+
+## BEFORE
+
+A ---> B ---> C
+^
+main
+^
+feature-auth
+
+Feature branch receives new commits:
+
+A ---> B ---> C ---> D ---> E
+^
+feature-auth
+
+main remains at C.
+
+---
+
+## COMMAND
+
+git merge feature-auth
+
+---
+
+## AFTER
+
+A ---> B ---> C ---> D ---> E
+^
+main
+^
+feature-auth
+
+---
+
+## WHY "FAST-FORWARD"?
+
+Git simply moves:
+
+main ---> E
+
+No merge commit is created.
+
+---
+
+## ADVANTAGES
+
+✓ Clean History
+
+✓ No Extra Commit
+
+✓ Easy To Understand
+
+================================================================================
+143. THREE-WAY MERGE
+====================
+
+Most common merge in real projects.
+
+---
+
+## BEFORE
+
+Starting Point:
+
+A ---> B ---> C
+
+main receives:
+
+A ---> B ---> C ---> D
+^
+main
+
+feature-auth receives:
+
+A ---> B ---> C ---> E
+^
+feature-auth
+
+---
+
+## WHAT GIT DOES
+
+Git analyzes:
+
+Common Ancestor = C
+
+Current Branch = D
+
+Feature Branch = E
+
+---
+
+## AFTER
+
+A ---> B ---> C ---> D
+\      
+\      M
+\    /
+E
+
+M = Merge Commit
+
+================================================================================
+144. MERGE COMMITS
+==================
+
+## NORMAL COMMIT
+
+Has one parent.
+
+A ---> B ---> C
+
+Parent of C = B
+
+---
+
+## MERGE COMMIT
+
+Has two parents.
+
+```
+   D
+  /
+```
+
+A-B-C
+
+E
+
+Merge ---> M
+
+Parents:
+
+Parent 1 = D
+
+Parent 2 = E
+
+---
+
+## VIEW MERGE COMMIT
+
+git show MERGE_HASH
+
+================================================================================
+145. MERGE CONFLICTS
+====================
+
+## WHAT IS A CONFLICT?
+
+Git cannot determine which change should win.
+
+---
+
+## EXAMPLE
+
+Original:
+
+const tax = 10;
+
+Developer A:
+
+const tax = 15;
+
+Developer B:
+
+const tax = 20;
+
+Git asks:
+
+Which value should be kept?
+
+---
+
+## RESULT
+
+Conflict Created
+
+Git Stops
+
+Developer Must Decide
+
+================================================================================
+146. WHY CONFLICTS OCCUR
+========================
+
+## COMMON CAUSES
+
+1. Same File Edited
+
+auth.js modified by multiple developers.
+
+---
+
+2. Same Line Edited
+
+Developer A:
+
+const PORT = 3000;
+
+Developer B:
+
+const PORT = 5000;
+
+---
+
+3. Deleted vs Modified
+
+Developer A deletes file.
+
+Developer B modifies file.
+
+---
+
+4. Renaming Conflicts
+
+Developer A:
+
+user.js -> users.js
+
+Developer B:
+
+modifies user.js
+
+================================================================================
+147. RESOLVING CONFLICTS
+========================
+
+## CONFLICT MARKERS
+
+<<<<<<< HEAD
+const tax = 15;
+===============
+
+const tax = 20;
+
+> > > > > > > feature-auth
+
+---
+
+## MEANING
+
+HEAD
+
+Current Branch
+
+=======
+
+Separator
+
+feature-auth
+
+Incoming Branch
+
+---
+
+## RESOLUTION PROCESS
+
+Step 1:
+
+Edit code manually.
+
+Step 2:
+
+Remove conflict markers.
+
+Step 3:
+
+Save file.
+
+Step 4:
+
+git add file.js
+
+Step 5:
+
+git commit
+
+Merge completed.
+
+================================================================================
+148. CONFLICT RESOLUTION STRATEGIES
+===================================
+
+## STRATEGY 1
+
+Accept Current Change
+
+Keep your version.
+
+================================================================================
+
+## STRATEGY 2
+
+Accept Incoming Change
+
+Keep teammate's version.
+
+================================================================================
+
+## STRATEGY 3
+
+Combine Both
+
+Example:
+
+const tax = 15;
+const shipping = 20;
+
+================================================================================
+
+## STRATEGY 4
+
+Rewrite Entire Section
+
+Often safest.
+
+---
+
+## INDUSTRY RULE
+
+Never resolve conflicts blindly.
+
+Understand the business logic first.
+
+================================================================================
+149. VISUAL MERGE TOOLS
+=======================
+
+## POPULAR TOOLS
+
+✓ VS Code
+
+✓ GitKraken
+
+✓ SourceTree
+
+✓ IntelliJ IDEA
+
+✓ WebStorm
+
+✓ Beyond Compare
+
+✓ Meld
+
+---
+
+## VS CODE OPTIONS
+
+Accept Current
+
+Accept Incoming
+
+Accept Both
+
+Compare Changes
+
+---
+
+## INDUSTRY REALITY
+
+Most developers resolve conflicts visually.
+
+================================================================================
+150. MERGE VS REBASE
+====================
+
+## MERGE
+
+Preserves branch history.
+
+Example:
+
+A-B-C
+
+D-E
+
+M
+
+Command:
+
+git merge feature-auth
+
+---
+
+## ADVANTAGES
+
+✓ Safe
+
+✓ History Preserved
+
+✓ Beginner Friendly
+
+================================================================================
+
+## REBASE
+
+Rewrites history.
+
+Before:
+
+A-B-C
+
+D-E
+
+After:
+
+A-B-C-D-E
+
+Command:
+
+git rebase main
+
+---
+
+## ADVANTAGES
+
+✓ Linear History
+
+✓ Cleaner Logs
+
+✓ Professional Commit Graph
+
+---
+
+## INDUSTRY RULE
+
+Private Branch:
+
+Use Rebase
+
+Shared Branch:
+
+Prefer Merge
+
+Never rebase public shared history.
+
+================================================================================
+151. MERGE BEST PRACTICES
+=========================
+
+## RULE 1
+
+Keep branches small.
+
+Bad:
+
+6 months old branch
+
+Good:
+
+2-5 day branch
+
+================================================================================
+
+## RULE 2
+
+Merge frequently.
+
+Smaller merges = fewer conflicts.
+
+================================================================================
+
+## RULE 3
+
+Pull latest changes first.
+
+git pull
+
+================================================================================
+
+## RULE 4
+
+Run tests before merging.
+
+npm test
+
+================================================================================
+
+## RULE 5
+
+Review code carefully.
+
+Never merge blindly.
+
+================================================================================
+152. POST-MERGE CLEANUP
+=======================
+
+## AFTER MERGING
+
+Verify application:
+
+npm run dev
+
+---
+
+Run tests:
+
+npm test
+
+---
+
+Verify production build:
+
+npm run build
+
+---
+
+Check repository status:
+
+git status
+
+================================================================================
+153. DELETING MERGED BRANCHES
+=============================
+
+## LOCAL BRANCH
+
+git branch -d feature-auth
+
+---
+
+## REMOTE BRANCH
+
+git push origin --delete feature-auth
+
+---
+
+## BENEFITS
+
+✓ Cleaner Repository
+
+✓ Less Confusion
+
+✓ Easier Navigation
+
+================================================================================
+154. VERIFYING MERGE RESULTS
+============================
+
+## CHECK COMMIT GRAPH
+
+git log --oneline --graph
+
+---
+
+## VERIFY
+
+✓ Files
+
+✓ Tests
+
+✓ Application Behavior
+
+✓ CI/CD Pipeline
+
+---
+
+## RULE
+
+Never assume a merge succeeded.
+
+Always verify.
+
+================================================================================
+155. COLLABORATIVE DEVELOPMENT WORKFLOW
+=======================================
+
+1. Create Branch
+
+2. Develop Feature
+
+3. Commit Changes
+
+4. Push Branch
+
+5. Create Pull Request
+
+6. Code Review
+
+7. Merge
+
+8. Deploy
+
+================================================================================
+156. TEAM BRANCHING STRATEGIES
+==============================
+
+## STRATEGY 1 : FEATURE BRANCH WORKFLOW
+
+main
+├── feature-auth
+├── feature-payment
+└── feature-email
+
+Most Common
+
+================================================================================
+
+## STRATEGY 2 : GIT FLOW
+
+main
+develop
+feature/*
+release/*
+hotfix/*
+
+Enterprise Friendly
+
+================================================================================
+
+## STRATEGY 3 : TRUNK-BASED DEVELOPMENT
+
+main
+├── short-lived branch
+├── short-lived branch
+└── short-lived branch
+
+Frequent Integration
+
+================================================================================
+157. GIT FLOW OVERVIEW
+======================
+
+## STRUCTURE
+
+main
+develop
+feature/*
+release/*
+hotfix/*
+
+---
+
+## FLOW
+
+Feature
+↓
+Develop
+↓
+Release
+↓
+Main
+
+---
+
+## ADVANTAGES
+
+✓ Structured
+
+✓ Predictable
+
+✓ Suitable For Large Teams
+
+---
+
+## DRAWBACKS
+
+✗ More Complex
+
+✗ More Branches
+
+✗ Slower Delivery
+
+================================================================================
+158. TRUNK-BASED DEVELOPMENT
+============================
+
+## CONCEPT
+
+One Main Branch
+
+Short-Lived Feature Branches
+
+Frequent Integration
+
+---
+
+## BENEFITS
+
+✓ Faster Delivery
+
+✓ Continuous Integration
+
+✓ Fewer Merge Conflicts
+
+================================================================================
+159. RELEASE MANAGEMENT
+=======================
+
+## WHAT IS A RELEASE?
+
+A version delivered to users.
+
+Examples:
+
+v1.0
+
+v1.1
+
+v2.0
+
+---
+
+## TYPICAL PROCESS
+
+Development
+↓
+Testing
+↓
+Release Branch
+↓
+QA
+↓
+Production
+
+================================================================================
+160. TEAM COLLABORATION BEST PRACTICES
+======================================
+
+1. Keep Branches Small
+
+2. Commit Frequently
+
+3. Use Meaningful Branch Names
+
+4. Create Pull Requests
+
+5. Review Code Carefully
+
+6. Communicate With Team
+
+7. Run Tests Before Merging
+
+8. Delete Merged Branches
+
+9. Keep main Deployable
+
+10. Follow Team Standards
+
+================================================================================
+REAL MERN DEVELOPER WORKFLOW
+============================
+
+1. Pull Latest main
+
+2. Create Feature Branch
+
+3. Write Code
+
+4. Commit Frequently
+
+5. Push Branch
+
+6. Create Pull Request
+
+7. Team Reviews Code
+
+8. Fix Review Comments
+
+9. Merge Branch
+
+10. Delete Branch
+
+11. Deploy
+
+================================================================================
+SECTION 10 SUMMARY
+==================
+
+After this section you should understand:
+
+✓ Merging
+
+✓ Fast-Forward Merge
+
+✓ Three-Way Merge
+
+✓ Merge Commits
+
+✓ Merge Conflicts
+
+✓ Conflict Resolution
+
+✓ Visual Merge Tools
+
+✓ Merge vs Rebase
+
+✓ Merge Best Practices
+
+✓ Post-Merge Cleanup
+
+✓ Branch Deletion
+
+✓ Verification
+
+✓ Collaborative Development
+
+✓ Git Flow
+
+✓ Trunk-Based Development
+
+✓ Release Management
+
+✓ Team Collaboration
+
+================================================================================
+MOST IMPORTANT MENTAL MODEL
+===========================
+
+Branches allow developers to work independently.
+
+Merges allow developers to combine their work.
+
+Without Branches:
+Chaos
+
+Without Merges:
+Isolation
+
+Together they make collaborative software development possible.
+
+================================================================================
+END OF SECTION 10 : MERGING & COLLABORATION (141-160)
+=====================================================

@@ -1,0 +1,316 @@
+📚 SECTION 1: FOUNDATION (1–15)
+Goal: Understand why Git exists and the problems it solves.
+1. What is Version Control?
+2. Why Version Control Exists
+3. Problems Without Version Control
+4. Local vs Centralized vs Distributed VCS
+5. History of Git
+6. Why Git Became Popular
+7. Git Architecture Overview
+8. Git vs GitHub
+9. Git vs GitLab vs Bitbucket
+10. Installing Git
+11. Checking Git Version
+12. Configuring Git Username
+13. Configuring Git Email
+14. Global vs Local Configuration
+15. Understanding the .git Folder
+
+⚙️ SECTION 2: GIT INTERNALS (16–30)
+Goal: Understand what Git is doing behind the scenes.
+16. Git Object Model
+17. Blob Objects
+18. Tree Objects
+19. Commit Objects
+20. SHA-1 Hashes
+21. References (Refs)
+22. Branch References
+23. Tags as References
+24. Understanding HEAD
+25. Detached HEAD State
+26. Directed Acyclic Graph (DAG)
+27. How Git Stores Data
+28. Understanding Snapshots
+29. Commit Relationships
+30. How Git Tracks History
+
+🛠️ SECTION 3: REPOSITORY CREATION & SETUP (31–40)
+Goal: Learn how repositories are created and initialized.
+31. What is a Repository?
+32. Creating a Repository (git init)
+33. Cloning a Repository (git clone)
+34. Local Repository Structure
+35. Working with Existing Projects
+36. Repository Best Practices
+37. Repository Naming Conventions
+38. Public vs Private Repositories
+39. Local vs Remote Repositories
+40. Initial Project Setup
+
+🔄 SECTION 4: CORE GIT WORKFLOW (41–60)
+Goal: Master the daily workflow every developer uses.
+41. Working Directory
+42. Staging Area (Index)
+43. Local Repository
+44. File Lifecycle in Git
+45. Untracked Files
+46. Tracked Files
+47. Modified Files
+48. Staged Files
+49. Committed Files
+50. Using git status
+51. Using git add
+52. Staging Specific Files
+53. Staging Multiple Files
+54. Staging All Files
+55. Creating Commits
+56. Commit Anatomy
+57. Writing Professional Commit Messages
+58. Conventional Commits
+59. Commit Best Practices
+60. Daily Development Workflow
+
+📊 SECTION 5: TRACKING CHANGES & HISTORY (61–80)
+Goal: Learn how to inspect and understand project history.
+61. Using git log
+62. Using git log --oneline
+63. Understanding Commit Hashes
+64. Navigating Commit History
+65. Understanding Commit Metadata
+66. Viewing File Changes
+67. Using git diff
+68. Comparing Staged Changes
+69. Comparing Commits
+70. Comparing Branches
+71. Using git show
+72. Understanding Snapshots
+73. Understanding Commit History
+74. Filtering Logs
+75. Searching Commit History
+76. Blame Analysis (git blame)
+77. Tracking File Evolution
+78. Viewing Contributors
+79. Auditing Changes
+80. History Best Practices
+
+🚑 SECTION 6: UNDOING CHANGES & RECOVERY (81–100)
+Goal: Recover safely from mistakes.
+81. Understanding HEAD
+82. Unstaging Files
+83. Discarding Local Changes
+84. Restoring Deleted Files
+85. Using git restore
+86. Soft Reset
+87. Mixed Reset
+88. Hard Reset
+89. Reset vs Revert
+90. Reverting Commits
+91. Reverting Multiple Commits
+92. Understanding Reflog
+93. Using git reflog
+94. Recovering Deleted Commits
+95. Recovering Lost Branches
+96. Recovering After Hard Reset
+97. Recovering Stashed Work
+98. Undoing Merges
+99. Recovering Mistakes
+100. Recovery Best Practices
+
+📦 SECTION 7: IGNORING FILES & PROJECT CLEANUP (101–110)
+Goal: Manage files that should not be tracked.
+101. What is .gitignore
+102. Creating .gitignore
+103. Ignoring Files
+104. Ignoring Folders
+105. Ignoring Patterns
+106. Global Git Ignore
+107. Tracking Previously Ignored Files
+108. Removing Tracked Files
+109. Cleaning Untracked Files
+110. Project Cleanup Strategies
+
+🎒 SECTION 8: STASHING & TEMPORARY WORK (111–120)
+Goal: Save unfinished work without committing.
+111. What is Git Stash?
+112. Creating a Stash
+113. Viewing Stashes
+114. Applying Stashes
+115. Popping Stashes
+116. Dropping Stashes
+117. Clearing Stashes
+118. Partial Stashing
+119. Stashing Untracked Files
+120. Real-World Stash Workflows
+
+🌳 SECTION 9: BRANCHING FUNDAMENTALS (121–140)
+Goal: Learn parallel development.
+121. What is a Branch?
+122. Why Branches Matter
+123. Understanding Branch Pointers
+124. Creating Branches
+125. Listing Branches
+126. Switching Branches
+127. Creating and Switching Together
+128. Using git switch
+129. Using git checkout
+130. Renaming Branches
+131. Deleting Branches
+132. Branch Naming Conventions
+133. Main Branch
+134. Development Branch
+135. Feature Branches
+136. Bugfix Branches
+137. Release Branches
+138. Hotfix Branches
+139. Feature Branch Workflow
+140. Branching Best Practices
+
+🤝 SECTION 10: MERGING & COLLABORATION (141–160)
+Goal: Combine work from multiple branches.
+141. Understanding Merge
+142. Fast Forward Merge
+143. Three-Way Merge
+144. Merge Commits
+145. Merge Conflicts
+146. Why Conflicts Occur
+147. Resolving Conflicts
+148. Conflict Resolution Strategies
+149. Visual Merge Tools
+150. Merge vs Rebase
+151. Merge Best Practices
+152. Post-Merge Cleanup
+153. Deleting Merged Branches
+154. Verifying Merge Results
+155. Collaborative Development
+156. Team Branching Strategies
+157. Git Flow Overview
+158. Trunk-Based Development
+159. Release Management
+160. Team Collaboration Best Practices
+
+🌐 SECTION 11: REMOTE REPOSITORIES (161–180)
+Goal: Connect local repositories with servers.
+161. What is a Remote Repository?
+162. Understanding Origin
+163. Adding Remotes
+164. Removing Remotes
+165. Renaming Remotes
+166. Viewing Remotes
+167. Pushing Code
+168. Pulling Code
+169. Fetching Changes
+170. Fetch vs Pull
+171. Tracking Remote Branches
+172. Upstream Branches
+173. Remote Branch References
+174. Viewing Remote Branches
+175. Synchronizing Repositories
+176. Managing Multiple Remotes
+177. Fork Upstream Connections
+178. Remote Cleanup
+179. Remote Best Practices
+180. Collaboration Through Remotes
+
+⚡ SECTION 12: ADVANCED GIT (181–200)
+Goal: Learn the tools used by experienced developers.
+181. What is Rebase?
+182. Merge vs Rebase
+183. Performing Rebase
+184. Rebase Conflicts
+185. Interactive Rebase
+186. Squashing Commits
+187. Reordering Commits
+188. Editing Commits
+189. Dropping Commits
+190. Cherry-Pick Basics
+191. Cherry-Picking Between Branches
+192. Git Tags
+193. Lightweight Tags
+194. Annotated Tags
+195. Pushing Tags
+196. Deleting Tags
+197. Git Bisect
+198. Git Hooks
+199. Git Worktrees
+200. Advanced Workflow Best Practices
+
+🐙 SECTION 13: GITHUB FUNDAMENTALS (201–220)
+Goal: Master GitHub as a collaboration platform.
+201. Creating a GitHub Account
+202. Creating Repositories
+203. Repository Structure
+204. Public vs Private Repositories
+205. README Files
+206. Markdown Basics
+207. GitHub Profile README
+208. Repository Visibility
+209. Repository Settings
+210. GitHub Notifications
+211. GitHub Issues
+212. Labels & Milestones
+213. GitHub Discussions
+214. GitHub Projects
+215. Releases
+216. Repository Insights
+217. Managing Collaborators
+218. Security Settings
+219. GitHub Organizations
+220. GitHub Best Practices
+
+🚀 SECTION 14: PROFESSIONAL GITHUB WORKFLOW (221–250)
+Goal: Learn how real companies work.
+221. Forking Repositories
+222. Fork vs Clone
+223. Open Source Workflow
+224. Pull Requests (PRs)
+225. Pull Request Lifecycle
+226. Creating High-Quality PRs
+227. Reviewing Pull Requests
+228. Code Reviews
+229. Review Comments
+230. Approvals & Change Requests
+231. Branch Protection Rules
+232. Protected Main Branch
+233. Required Status Checks
+234. Squash Merges
+235. Rebase Merges
+236. Merge Commits on GitHub
+237. GitHub Actions Basics
+238. CI/CD Fundamentals
+239. Workflow Files
+240. Jobs & Steps
+241. GitHub Secrets
+242. Automated Testing
+243. Automated Deployment
+244. SSH Authentication
+245. Personal Access Tokens
+246. Open Source Contributions
+247. Enterprise Git Workflow
+248. Monorepo Workflows
+249. Team Collaboration Standards
+250. Production-Level Git & GitHub Practices
+
+🎯 SECTION 15: MOST ASKED INTERVIEW TOPICS (MUST MASTER)
+⭐ Git vs GitHub
+⭐ Git vs GitLab vs Bitbucket
+⭐ Fetch vs Pull
+⭐ Merge vs Rebase
+⭐ Reset vs Revert
+⭐ Fork vs Clone
+⭐ HEAD vs Detached HEAD
+⭐ Fast Forward vs Three-Way Merge
+⭐ Stash vs Commit
+⭐ Tag vs Branch
+⭐ Cherry-Pick
+⭐ Reflog
+⭐ Branching Strategies
+⭐ Pull Request Workflow
+⭐ GitHub Actions Basics
+⭐ Conflict Resolution
+⭐ CI/CD Fundamentals
+⭐ Conventional Commits
+⭐ Open Source Contribution Workflow
+⭐ Enterprise Git Workflow
+
+
+

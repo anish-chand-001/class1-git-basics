@@ -1,0 +1,906 @@
+================================================================================
+                           GIT & GITHUB NOTES
+                         SECTION 2: GIT INTERNALS
+                                 (16-30)
+================================================================================
+
+THE MOST IMPORTANT MENTAL MODEL
+================================================================================
+
+Most beginners think:
+
+Git stores files.
+
+WRONG.
+
+Git stores:
+
+SNAPSHOTS
+
+Think of Git as:
+
+A Snapshot Database
+
+NOT
+
+A File Storage System
+
+Everything in Git becomes easier once you understand this.
+
+================================================================================
+16. GIT OBJECT MODEL
+================================================================================
+
+Git is basically a database.
+
+Everything inside Git is stored as an OBJECT.
+
+Git has 4 major object types:
+
+1. Blob
+2. Tree
+3. Commit
+4. Tag
+
+Relationship:
+
+Commit
+   |
+   v
+ Tree
+   |
+   v
+ Blob
+
+Meaning:
+
+Commit = Project Snapshot
+
+Tree   = Folder
+
+Blob   = File Content
+
+--------------------------------------------------------------------------------
+Example Project
+--------------------------------------------------------------------------------
+
+project/
+|
+|-- app.js
+|-- auth.js
+|
++-- package.json
+
+Git does NOT store files exactly like your operating system.
+
+Instead:
+
+Git converts everything into objects.
+
+Why?
+
+✓ Faster
+✓ Smaller
+✓ Easier to Track
+✓ Immutable
+
+================================================================================
+17. BLOB OBJECTS
+================================================================================
+
+Blob stands for:
+
+Binary Large Object
+
+In Git:
+
+Blob = File Content
+
+A Blob stores:
+
+✓ File Content
+
+A Blob does NOT store:
+
+✗ File Name
+✗ File Path
+✗ Folder Structure
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+File Content:
+
+console.log("Hello");
+
+Git creates:
+
+Blob A
+|
+v
+console.log("Hello");
+
+--------------------------------------------------------------------------------
+
+Now change file:
+
+console.log("Hello World");
+
+Git creates:
+
+Blob B
+|
+v
+console.log("Hello World");
+
+--------------------------------------------------------------------------------
+
+Important:
+
+Git does NOT modify Blob A.
+
+Instead:
+
+Blob A remains forever.
+
+Blob B is created.
+
+--------------------------------------------------------------------------------
+IMMUTABILITY
+--------------------------------------------------------------------------------
+
+Git Objects are:
+
+IMMUTABLE
+
+Meaning:
+
+Once created,
+they cannot be changed.
+
+Benefits:
+
+✓ Reliability
+✓ Data Integrity
+✓ Historical Recovery
+
+Industry Example:
+
+"Show me the code from 3 years ago."
+
+Git can do it because old blobs still exist.
+
+================================================================================
+18. TREE OBJECTS
+================================================================================
+
+Question:
+
+Blob stores file content.
+
+Who stores folder structure?
+
+Answer:
+
+TREE OBJECTS
+
+Think:
+
+Blob = File
+
+Tree = Folder
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+project/
+|
+|-- app.js
+|-- auth.js
+|
++-- src/
+     |
+     +-- user.js
+
+Git creates:
+
+Root Tree
+|
+|-- app.js  ---> Blob
+|-- auth.js ---> Blob
+|
++-- src ---> Tree
+              |
+              +-- user.js ---> Blob
+
+--------------------------------------------------------------------------------
+MERN Example
+--------------------------------------------------------------------------------
+
+Project:
+
+backend/
+frontend/
+
+Git stores:
+
+Root Tree
+|
+|-- Backend Tree
+|
++-- Frontend Tree
+
+Each tree can contain:
+
+✓ More Trees
+✓ More Blobs
+
+================================================================================
+19. COMMIT OBJECTS
+================================================================================
+
+The most important Git object.
+
+A Commit contains:
+
+✓ Tree Reference
+✓ Author
+✓ Timestamp
+✓ Message
+✓ Parent Commit
+
+Structure:
+
+Commit
+|
+|-- Tree
+|-- Author
+|-- Date
+|-- Message
+|
++-- Parent Commit
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+git commit -m "Add login feature"
+
+Creates:
+
+Commit Object
+
+Message:
+Add login feature
+
+Author:
+Anish
+
+Date:
+2026-06-07
+
+Tree:
+Current Snapshot
+
+Parent:
+Previous Commit
+
+--------------------------------------------------------------------------------
+IMPORTANT
+--------------------------------------------------------------------------------
+
+Most people think:
+
+Commit = Code Changes
+
+Wrong.
+
+Commit = Snapshot of Entire Project
+
+This distinction is extremely important.
+
+================================================================================
+20. SHA-1 HASHES
+================================================================================
+
+Every Git object receives a unique ID.
+
+Example:
+
+e4f3d7a8b2f4c91d...
+
+This unique ID is called:
+
+SHA-1 Hash
+
+Think:
+
+Fingerprint
+
+Every object has one.
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+Blob
+ |
+ v
+SHA
+
+Tree
+ |
+ v
+SHA
+
+Commit
+ |
+ v
+SHA
+
+--------------------------------------------------------------------------------
+Hash Behavior
+--------------------------------------------------------------------------------
+
+Content:
+
+Hello
+
+Hash:
+
+ABC123
+
+Change Content:
+
+Hello World
+
+Hash:
+
+XYZ456
+
+Result:
+
+Even a tiny change creates a completely different hash.
+
+--------------------------------------------------------------------------------
+Why Hashes Matter
+--------------------------------------------------------------------------------
+
+Git instantly detects:
+
+✓ Changes
+✓ Corruption
+✓ Tampering
+
+================================================================================
+21. REFERENCES (REFS)
+================================================================================
+
+Hashes are long and difficult to remember.
+
+Example:
+
+f8a3d81b91b27381d92831...
+
+Nobody wants to type that.
+
+Git uses:
+
+REFERENCES (REFS)
+
+Examples:
+
+main
+feature-auth
+v1.0
+
+Think:
+
+Ref = Nickname for a Hash
+
+Instead of:
+
+f8a3d81b91b27381d...
+
+You can simply use:
+
+main
+
+================================================================================
+22. BRANCH REFERENCES
+================================================================================
+
+Most beginners think:
+
+Branch = Copy of Project
+
+WRONG.
+
+A Branch is simply:
+
+A Pointer to a Commit
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+main
+ |
+ v
+Commit C
+
+After a new commit:
+
+main
+ |
+ v
+Commit D
+
+Only the pointer moved.
+
+Nothing was copied.
+
+--------------------------------------------------------------------------------
+Why Branches Are Fast
+--------------------------------------------------------------------------------
+
+Git is NOT duplicating files.
+
+Git is moving references.
+
+Interview Question:
+
+Why are Git branches lightweight?
+
+Answer:
+
+Because a branch is only a reference (pointer) to a commit.
+
+================================================================================
+23. TAGS AS REFERENCES
+================================================================================
+
+Tags are also pointers.
+
+Example:
+
+git tag v1.0
+
+Creates:
+
+v1.0
+ |
+ v
+Commit A
+
+--------------------------------------------------------------------------------
+Branch vs Tag
+--------------------------------------------------------------------------------
+
+Branch:
+
+main
+ |
+ v
+A ---> B ---> C
+
+Branch keeps moving.
+
+--------------------------------------------------------------------------------
+
+Tag:
+
+v1.0
+ |
+ v
+A
+
+Tag never moves.
+
+--------------------------------------------------------------------------------
+Industry Usage
+--------------------------------------------------------------------------------
+
+Release Versions:
+
+v1.0
+v2.0
+v3.0
+
+================================================================================
+24. UNDERSTANDING HEAD
+================================================================================
+
+HEAD is one of Git's most important pointers.
+
+Meaning:
+
+Current Position
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+HEAD
+ |
+ v
+main
+ |
+ v
+Commit C
+
+Meaning:
+
+You are currently working on main branch.
+
+--------------------------------------------------------------------------------
+
+After:
+
+git switch feature-auth
+
+HEAD becomes:
+
+HEAD
+ |
+ v
+feature-auth
+
+Think:
+
+HEAD = "Where am I right now?"
+
+================================================================================
+25. DETACHED HEAD STATE
+================================================================================
+
+One of Git's most confusing concepts.
+
+--------------------------------------------------------------------------------
+Normal State
+--------------------------------------------------------------------------------
+
+HEAD
+ |
+ v
+main
+ |
+ v
+Commit C
+
+--------------------------------------------------------------------------------
+Detached State
+--------------------------------------------------------------------------------
+
+HEAD
+ |
+ v
+Commit B
+
+No branch attached.
+
+HEAD points directly to a commit.
+
+--------------------------------------------------------------------------------
+How It Happens
+--------------------------------------------------------------------------------
+
+git checkout COMMIT_ID
+
+--------------------------------------------------------------------------------
+Why Dangerous?
+--------------------------------------------------------------------------------
+
+You create:
+
+Commit X
+Commit Y
+
+But:
+
+No branch points to them.
+
+Easy to lose work.
+
+--------------------------------------------------------------------------------
+Industry Rule
+--------------------------------------------------------------------------------
+
+If Detached HEAD appears:
+
+git switch -c new-branch
+
+Create a branch immediately.
+
+================================================================================
+26. DIRECTED ACYCLIC GRAPH (DAG)
+================================================================================
+
+Git History is NOT a list.
+
+Git History is a GRAPH.
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+A ---> B ---> C
+       \
+        \
+         D ---> E
+
+--------------------------------------------------------------------------------
+Definitions
+--------------------------------------------------------------------------------
+
+Directed:
+
+History has direction.
+
+Parent ---> Child
+
+----------------------------------------
+
+Acyclic:
+
+No loops allowed.
+
+----------------------------------------
+
+Graph:
+
+Connected nodes.
+
+--------------------------------------------------------------------------------
+
+Every Git repository is actually a DAG.
+
+================================================================================
+27. HOW GIT STORES DATA
+================================================================================
+
+Most developers think:
+
+Git stores changes.
+
+WRONG.
+
+Git stores snapshots.
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+Commit 1:
+
+A
+B
+C
+
+----------------------------------------
+
+Commit 2:
+
+A
+B
+C
+D
+
+----------------------------------------
+
+Git Stores:
+
+Snapshot #1
+
+Snapshot #2
+
+NOT
+
+"+ D"
+
+--------------------------------------------------------------------------------
+Benefits
+--------------------------------------------------------------------------------
+
+✓ Faster Recovery
+✓ Better Reliability
+✓ Easier History Management
+
+================================================================================
+28. UNDERSTANDING SNAPSHOTS
+================================================================================
+
+Imagine taking photographs.
+
+Day 1
+
+📸 Snapshot #1
+
+Project Version 1
+
+----------------------------------------
+
+Day 2
+
+📸 Snapshot #2
+
+Project Version 2
+
+----------------------------------------
+
+Day 3
+
+📸 Snapshot #3
+
+Project Version 3
+
+--------------------------------------------------------------------------------
+
+Every Commit = A Photograph
+
+NOT
+
+A list of edits.
+
+--------------------------------------------------------------------------------
+Industry Impact
+--------------------------------------------------------------------------------
+
+You can restore any commit instantly.
+
+================================================================================
+29. COMMIT RELATIONSHIPS
+================================================================================
+
+Every commit knows:
+
+"My Parent Commit"
+
+--------------------------------------------------------------------------------
+Example
+--------------------------------------------------------------------------------
+
+A ---> B ---> C ---> D
+
+Commit D stores:
+
+Parent = C
+
+Commit C stores:
+
+Parent = B
+
+Commit B stores:
+
+Parent = A
+
+--------------------------------------------------------------------------------
+Merge Commit Example
+--------------------------------------------------------------------------------
+
+A ---> B ---> C
+       \
+        \
+         D
+          \
+           M
+
+Merge Commit M stores:
+
+Parent 1 = C
+
+Parent 2 = D
+
+This is why Git history forms a graph.
+
+================================================================================
+30. HOW GIT TRACKS HISTORY
+================================================================================
+
+Git History = Commit Objects Connected By Parent References
+
+--------------------------------------------------------------------------------
+Visual
+--------------------------------------------------------------------------------
+
+Commit D
+   |
+Parent
+   |
+   v
+Commit C
+   |
+Parent
+   |
+   v
+Commit B
+   |
+Parent
+   |
+   v
+Commit A
+
+--------------------------------------------------------------------------------
+
+When you run:
+
+git log
+
+Git starts from:
+
+HEAD
+ |
+ v
+Commit D
+ |
+ v
+Commit C
+ |
+ v
+Commit B
+ |
+ v
+Commit A
+
+and prints the history.
+
+================================================================================
+THE SINGLE MOST IMPORTANT MENTAL MODEL
+================================================================================
+
+REMEMBER THIS:
+
+Git is NOT a File Storage System.
+
+Git is a Snapshot Database.
+
+Everything else is built on top of this idea:
+
+✓ Branches
+✓ Merges
+✓ Rebases
+✓ Tags
+✓ Pull Requests
+✓ Conflict Resolution
+✓ GitHub Workflows
+
+If you understand Snapshots, you understand Git.
+
+================================================================================
+SECTION 2 SUMMARY
+================================================================================
+
+After mastering Git Internals you should understand:
+
+✓ Git Object Model
+✓ Blob Objects
+✓ Tree Objects
+✓ Commit Objects
+✓ SHA-1 Hashes
+✓ References (Refs)
+✓ Branch References
+✓ Tags
+✓ HEAD
+✓ Detached HEAD
+✓ DAG (Directed Acyclic Graph)
+✓ Snapshot Storage
+✓ Commit Relationships
+✓ History Traversal
+
+CORE FORMULA:
+
+Blob    = File Content
+Tree    = Folder Structure
+Commit  = Project Snapshot
+Ref     = Pointer
+Branch  = Moving Pointer
+Tag     = Fixed Pointer
+HEAD    = Current Position
+
+Git = Snapshot Database
+
+================================================================================
+END OF SECTION 2 : GIT INTERNALS
+================================================================================

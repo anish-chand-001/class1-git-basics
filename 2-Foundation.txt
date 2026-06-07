@@ -1,0 +1,647 @@
+================================================================================
+                           GIT & GITHUB NOTES
+                           SECTION 1: FOUNDATION
+================================================================================
+
+1. WHAT IS VERSION CONTROL?
+================================================================================
+
+Definition:
+Version Control is a system that records changes to files over time so that you
+can:
+
+✓ Track every change
+✓ See who changed what
+✓ Restore old versions
+✓ Compare versions
+✓ Collaborate safely
+
+Think of it as:
+Google Docs Version History for your entire codebase.
+
+Example:
+
+Day 1:
+function login() {
+    console.log("Login");
+}
+
+Day 2:
+function login() {
+    console.log("JWT Login");
+}
+
+Day 7:
+function login() {
+    console.log("OAuth Login");
+}
+
+Question:
+Can you go back to Day 2's code?
+
+Without Version Control:
+✗ Difficult
+
+With Git:
+✓ Easy
+
+Industry Usage:
+Every major software company uses Version Control:
+
+• Google
+• Amazon
+• Microsoft
+• Netflix
+• Uber
+• Swiggy
+• Zomato
+
+Without Version Control, modern software teams cannot function.
+
+================================================================================
+2. WHY VERSION CONTROL EXISTS
+================================================================================
+
+Before Git, developers managed projects using folders:
+
+project/
+project-final/
+project-final-v2/
+project-final-v3/
+project-final-final/
+project-final-final-REAL/
+
+Problems:
+
+1. Which folder is latest?
+   → Nobody knows.
+
+2. What changed?
+   → Nobody knows.
+
+3. Who changed it?
+   → Nobody knows.
+
+4. Can we restore old code?
+   → Maybe.
+
+5. Multiple developers working together?
+   → Disaster.
+
+Version Control solves all these problems.
+
+================================================================================
+3. PROBLEMS WITHOUT VERSION CONTROL
+================================================================================
+
+Imagine a team of 10 developers.
+
+Developer A:
+→ Added Login Feature
+
+Developer B:
+→ Added Payment Feature
+
+Developer C:
+→ Fixed Critical Bug
+
+All send ZIP files to the Project Manager.
+
+Questions:
+
+• Which version is latest?
+• Which file changed?
+• Who changed it?
+• Can we restore previous code?
+
+Without Version Control:
+✗ Chaos
+
+With Git:
+✓ History
+✓ Ownership
+✓ Collaboration
+✓ Recovery
+✓ Auditing
+
+Production Example:
+
+A bug appears in production.
+
+Company asks:
+"Which code change introduced this bug?"
+
+Git can answer in seconds.
+
+Without Git:
+Hours or even days of investigation.
+
+================================================================================
+4. LOCAL VS CENTRALIZED VS DISTRIBUTED VCS
+================================================================================
+
+A) LOCAL VERSION CONTROL
+--------------------------------
+
+Everything stored on your machine.
+
++---------------------+
+|     YOUR LAPTOP     |
+|---------------------|
+| Project Files       |
+| History             |
+| Versions            |
++---------------------+
+
+Problem:
+If your laptop dies:
+
+✗ Everything is gone.
+
+--------------------------------
+
+B) CENTRALIZED VERSION CONTROL
+--------------------------------
+
+Examples:
+• CVS
+• SVN
+
+Architecture:
+
+      +-----------+
+      |  SERVER   |
+      +-----------+
+          /|\
+           |
+   -----------------
+   |       |       |
+ Dev A   Dev B   Dev C
+
+Benefits:
+✓ Easy collaboration
+
+Problems:
+✗ Server failure = everyone stuck
+✗ Single point of failure
+
+--------------------------------
+
+C) DISTRIBUTED VERSION CONTROL
+--------------------------------
+
+Git belongs here.
+
+Architecture:
+
++---------+    +---------+    +---------+
+| Dev A   |    | Dev B   |    | Dev C   |
+| Full    |    | Full    |    | Full    |
+| Copy    |    | Copy    |    | Copy    |
++---------+    +---------+    +---------+
+
+Every developer has:
+
+✓ Source Code
+✓ Complete History
+✓ Branches
+✓ Commits
+✓ Tags
+
+Benefits:
+
+✓ Fast
+✓ Offline Work
+✓ No Single Point of Failure
+✓ Safer
+
+Why Git Won:
+
+Even if GitHub disappears,
+your repository still exists locally.
+
+================================================================================
+5. HISTORY OF GIT
+================================================================================
+
+Created By:
+Linus Torvalds
+
+Year:
+2005
+
+Reason:
+
+Linux Kernel development was growing rapidly.
+
+Existing tools were:
+
+✗ Slow
+✗ Expensive
+✗ Limited
+
+Linus wanted:
+
+✓ Fast
+✓ Distributed
+✓ Reliable
+✓ Free
+
+Result:
+Git was born.
+
+Design Goals:
+
+1. Speed
+2. Data Integrity
+3. Distributed Development
+4. Lightweight Branching
+
+================================================================================
+6. WHY GIT BECAME POPULAR
+================================================================================
+
+Git solved problems better than competitors.
+
+Reasons:
+
+✓ Fast commits
+✓ Cheap branches
+✓ Offline development
+✓ Open Source
+✓ Free forever
+✓ GitHub accelerated adoption
+
+Today:
+Git is the industry standard.
+
+================================================================================
+7. GIT ARCHITECTURE OVERVIEW
+================================================================================
+
+This is the most important Git concept.
+
+Git has 3 major areas:
+
++-------------------+
+| WORKING DIRECTORY |
++-------------------+
+          |
+          | git add
+          v
++-------------------+
+|   STAGING AREA    |
++-------------------+
+          |
+          | git commit
+          v
++-------------------+
+|    REPOSITORY     |
++-------------------+
+
+--------------------------------------------------------------------------------
+A) WORKING DIRECTORY
+--------------------------------------------------------------------------------
+
+Actual project files.
+
+Example:
+
+app.js
+server.js
+package.json
+
+This is where you edit code.
+
+--------------------------------------------------------------------------------
+B) STAGING AREA
+--------------------------------------------------------------------------------
+
+Temporary selection box.
+
+Think of it as:
+
+Shopping Cart
+
+You choose which changes should go into the next commit.
+
+--------------------------------------------------------------------------------
+C) REPOSITORY
+--------------------------------------------------------------------------------
+
+Permanent history storage.
+
+Stored inside:
+
+.git/
+
+Contains:
+
+✓ Commits
+✓ Branches
+✓ Tags
+✓ History
+
+--------------------------------------------------------------------------------
+FLOW SUMMARY
+--------------------------------------------------------------------------------
+
+Edit File
+    |
+    v
+Working Directory
+    |
+    | git add
+    v
+Staging Area
+    |
+    | git commit
+    v
+Repository
+
+MEMORIZE THIS FLOW.
+This is Git.
+
+================================================================================
+8. GIT VS GITHUB
+================================================================================
+
+Many beginners think they are the same.
+
+They are NOT.
+
+--------------------------------------------------------------------------------
+GIT
+--------------------------------------------------------------------------------
+
+Software installed on your computer.
+
+Examples:
+
+git init
+git add .
+git commit
+
+Works locally.
+
+--------------------------------------------------------------------------------
+GITHUB
+--------------------------------------------------------------------------------
+
+Cloud platform that stores Git repositories online.
+
+--------------------------------------------------------------------------------
+ANALOGY
+--------------------------------------------------------------------------------
+
+Git     = Microsoft Word
+
+GitHub  = Google Drive
+
+Git creates versions.
+GitHub stores them online.
+
+--------------------------------------------------------------------------------
+INDUSTRY WORKFLOW
+--------------------------------------------------------------------------------
+
+Developer
+    |
+    v
+Git (Local)
+    |
+    v
+GitHub (Cloud)
+    |
+    v
+Team Members
+
+================================================================================
+9. GIT VS GITLAB VS BITBUCKET
+================================================================================
+
+All are Git Hosting Platforms.
+
+GitHub:
+✓ Most Popular
+✓ Open Source Projects
+✓ Portfolio Building
+✓ Huge Community
+
+GitLab:
+✓ Built-in CI/CD
+✓ Strong DevOps Features
+✓ Enterprise Friendly
+
+Bitbucket:
+✓ Owned by Atlassian
+✓ Great Jira Integration
+✓ Popular in corporate teams
+
+Popularity:
+
+GitHub    → Most Common
+GitLab    → Enterprise
+Bitbucket → Jira-heavy Companies
+
+Recommendation for Beginners:
+
+Learn GitHub first.
+
+================================================================================
+10. INSTALLING GIT
+================================================================================
+
+Verify Installation:
+
+git --version
+
+Example Output:
+
+git version 2.50.0
+
+Installation Provides:
+
+✓ Git CLI
+✓ Git Engine
+✓ Configuration System
+
+Now your machine can create repositories.
+
+================================================================================
+11. CHECKING GIT VERSION
+================================================================================
+
+Command:
+
+git --version
+
+Purpose:
+
+✓ Verify installation
+✓ Check compatibility
+✓ Debug issues
+
+Example:
+
+Some projects require:
+
+Git >= 2.40
+
+Version matters.
+
+================================================================================
+12. CONFIGURING GIT USERNAME
+================================================================================
+
+Command:
+
+git config --global user.name "Anish Chand"
+
+Purpose:
+
+Every commit stores:
+
+Author Name
+
+Example:
+
+Commit:
+"Fix payment bug"
+
+Author:
+Anish Chand
+
+Ownership becomes clear.
+
+================================================================================
+13. CONFIGURING GIT EMAIL
+================================================================================
+
+Command:
+
+git config --global user.email "anish@example.com"
+
+Purpose:
+
+Git tracks identity using email.
+
+GitHub links commits using this email.
+
+Example:
+
+Anish Chand
+anish@example.com
+
+Appears as commit author.
+
+================================================================================
+14. GLOBAL VS LOCAL CONFIGURATION
+================================================================================
+
+GLOBAL CONFIGURATION
+--------------------------------
+
+Applies to all repositories.
+
+git config --global user.name "Anish Chand"
+
+Stored once.
+
+--------------------------------
+
+LOCAL CONFIGURATION
+--------------------------------
+
+Applies only to current repository.
+
+git config user.name "Company Account"
+
+Useful when:
+
+Personal Projects:
+→ Personal Identity
+
+Company Projects:
+→ Work Identity
+
+--------------------------------
+PRIORITY ORDER
+--------------------------------
+
+Local Configuration
+        ↓
+Global Configuration
+        ↓
+System Configuration
+
+Winner:
+LOCAL CONFIGURATION
+
+================================================================================
+15. UNDERSTANDING THE .GIT FOLDER
+================================================================================
+
+When you run:
+
+git init
+
+Git creates:
+
+.git/
+
+Structure:
+
+.git/
+├── objects/
+├── refs/
+├── logs/
+├── hooks/
+├── config
+└── HEAD
+
+Stores:
+
+✓ Commits
+✓ Branches
+✓ Tags
+✓ History
+✓ Configuration
+
+Most Important Insight:
+
+Your project history is NOT stored in GitHub.
+
+It is stored inside:
+
+.git/
+
+GitHub is simply another copy.
+
+================================================================================
+FOUNDATION SUMMARY
+================================================================================
+
+After mastering these 15 topics, you should understand:
+
+✓ Why Git Exists
+✓ Problems Git Solves
+✓ Local vs Centralized vs Distributed VCS
+✓ History of Git
+✓ Git Architecture
+✓ Working Directory
+✓ Staging Area
+✓ Repository
+✓ Git vs GitHub
+✓ Git Hosting Platforms
+✓ Git Configuration
+✓ .git Folder Internals
+✓ How Developers Collaborate
+
+NEXT STEP:
+Learn "Core Git Workflow" (Working Directory → Staging Area → Commit →
+Branching → Merging → Remote Repositories)
+
+================================================================================
+END OF FOUNDATION NOTES
+================================================================================
